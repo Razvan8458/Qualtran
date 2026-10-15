@@ -225,6 +225,16 @@ class Square(Bloq):
         a = vals["a"]
         return {'a': a, 'result': a**2}
 
+    def build_composite_bloq(
+        self, bb: 'BloqBuilder', a: 'Soquet', result: 'Soquet'
+    ) -> Dict[str, 'SoquetT']:
+
+        if is_symbolic(self.a_bitsize):
+            raise DecomposeTypeError(f"Cannot decompose {self} with symbolic bitsizes.")
+
+        
+        
+
     def wire_symbol(self, reg: Optional[Register], idx: Tuple[int, ...] = tuple()) -> 'WireSymbol':
         if reg is None:
             return Text("a^2")
