@@ -232,7 +232,15 @@ class Square(Bloq):
         if is_symbolic(self.a_bitsize):
             raise DecomposeTypeError(f"Cannot decompose {self} with symbolic bitsizes.")
 
+        result_bitsize = 2 * self.a_bitsize
+        result = bb.allocate(dtype=QUInt(result_bitsize))
+        a_split = bb.split(a)
+        result_split = bb.split(result)
+
+        a_split[0], result_split[0] = bb.add(CNOT, control = a_split[0], target = a_split[0])
+
         
+
         
 
     def wire_symbol(self, reg: Optional[Register], idx: Tuple[int, ...] = tuple()) -> 'WireSymbol':
